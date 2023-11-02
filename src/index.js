@@ -6,9 +6,12 @@ const elements = {
   gallery: document.querySelector(".gallery"),
   loadMore: document.querySelector(".load-more"),
 };
+
 let inputText = "";
 let page = 1;
+
 elements.form.addEventListener("submit", handlerSubmit);
+elements.loadMore.addEventListener("click", handlerLoadMore);
 
 async function handlerSubmit(evt) {
   evt.preventDefault();
@@ -21,18 +24,50 @@ async function handlerSubmit(evt) {
   }
 
   try {
+    elements.loadMore.hidden = true;
+
     const resp = await getArrPictures(inputText, page);
+
+    if (resp.data.hits.length < 1) {
+      return Notify.failure(
+        "Sorry, there are no images matching your search query. Please try again."
+      );
+    }
+    Notify.info(`Hooray! We found ${resp.data.totalHits} images.`);
+
     elements.gallery.insertAdjacentHTML(
       "beforeend",
       createMarkup(resp.data.hits)
     );
+
+    elements.loadMore.hidden = false;
   } catch (err) {
-    console.error(err);
-    // Notify.failure(
-    //   "Sorry, there are no images matching your search query. Please try again."
-    // );
+    Notify.failure(
+      "Sorry, there are no images matching your search query. Please try again."
+    );
   } finally {
     evt.target.reset();
+  }
+}
+
+async function handlerLoadMore() {
+  page += 1;
+
+  try {
+    const resp = await getArrPictures(inputText, page);
+
+    elements.gallery.insertAdjacentHTML(
+      "beforeend",
+      createMarkup(resp.data.hits)
+    );
+
+    if (page >= 12) {
+      elements.loadMore.hidden = true;
+    }
+  } catch (err) {
+    Notify.failure(
+      "Sorry, there are no images matching your search query. Please try again."
+    );
   }
 }
 
