@@ -33,7 +33,7 @@ async function handlerSubmit(evt) {
 
     if (resp.data.hits.length < 1) {
       return Notify.failure(
-        '36 / Sorry, there are no images matching your search query. Please try again.'
+        'Sorry, there are no images matching your search query. Please try again.'
       );
     }
 
@@ -49,9 +49,8 @@ async function handlerSubmit(evt) {
       ? elements.loadMore.classList.add('is-hidden')
       : elements.loadMore.classList.remove('is-hidden');
   } catch (err) {
-    console.log(err);
     Notify.failure(
-      ' 53 / Sorry, there are no images matching your search query. Please try again.'
+      'Sorry, there are no images matching your search query. Please try again.'
     );
   } finally {
     evt.target.reset();
@@ -75,7 +74,7 @@ async function handlerLoadMore() {
     }
   } catch (err) {
     Notify.failure(
-      '77 / Sorry, there are no images matching your search query. Please try again.'
+      'Sorry, there are no images matching your search query. Please try again.'
     );
   }
 }

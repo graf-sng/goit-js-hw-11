@@ -528,14 +528,13 @@ async function handlerSubmit(evt) {
     try {
         elements.loadMore.classList.add("is-hidden");
         const resp = await getArrPictures(inputText, page);
-        if (resp.data.hits.length < 1) return (0, _notiflixNotifyAio.Notify).failure("36 / Sorry, there are no images matching your search query. Please try again.");
+        if (resp.data.hits.length < 1) return (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
         (0, _notiflixNotifyAio.Notify).info(`Hooray! We found ${resp.data.totalHits} images.`);
         elements.gallery.insertAdjacentHTML("beforeend", createMarkup(resp.data.hits));
         gallerySimple.refresh();
         resp.data.hits.length < 40 ? elements.loadMore.classList.add("is-hidden") : elements.loadMore.classList.remove("is-hidden");
     } catch (err) {
-        console.log(err);
-        (0, _notiflixNotifyAio.Notify).failure(" 53 / Sorry, there are no images matching your search query. Please try again.");
+        (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
     } finally{
         evt.target.reset();
     }
@@ -548,7 +547,7 @@ async function handlerLoadMore() {
         gallerySimple.refresh();
         if (page >= 12) elements.loadMore.classList.add("is-hidden");
     } catch (err) {
-        (0, _notiflixNotifyAio.Notify).failure("77 / Sorry, there are no images matching your search query. Please try again.");
+        (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
     }
 }
 async function getArrPictures(search, page1) {
