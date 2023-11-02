@@ -49,6 +49,7 @@ async function handlerSubmit(evt) {
       ? elements.loadMore.classList.add('is-hidden')
       : elements.loadMore.classList.remove('is-hidden');
   } catch (err) {
+    console.log(err);
     Notify.failure(
       ' 53 / Sorry, there are no images matching your search query. Please try again.'
     );
