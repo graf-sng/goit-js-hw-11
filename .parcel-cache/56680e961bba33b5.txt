@@ -3972,7 +3972,7 @@
 135/home/graf/web/goit-js-hw-11/node_modules/@parcel/node-resolver-core/test/fixture/node_modules/side-effects-package-redirect-up/foo/bar1696780936676869345 1
 78/home/graf/web/goit-js-hw-11/node_modules/svgo/plugins/cleanupNumericValues.js1696780933500869277 0
 87/home/graf/web/goit-js-hw-11/node_modules/caniuse-lite/data/features/urlsearchparams.js1696780937720869367 0
-41/home/graf/web/goit-js-hw-11/src/index.js1698916176572776034 0
+41/home/graf/web/goit-js-hw-11/src/index.js1698916559082342575 0
 68/home/graf/web/goit-js-hw-11/node_modules/svgo/plugins/reusePaths.js1696780935204869313 0
 78/home/graf/web/goit-js-hw-11/node_modules/simplelightbox/demo/img/thumb/03.jpg1696781318416877482 0
 71/home/graf/web/goit-js-hw-11/node_modules/svgo/plugins/removeDoctype.js1696780934956869308 0
