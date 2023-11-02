@@ -94,7 +94,9 @@ async function getArrPictures(search, page) {
       page,
     },
   };
-  return (resp = await axios.get(BASE_URL, options));
+
+  const resp = await axios.get(BASE_URL, options);
+  return resp;
 }
 
 function createMarkup(arr) {

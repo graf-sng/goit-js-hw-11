@@ -565,7 +565,8 @@ async function getArrPictures(search, page1) {
             page: page1
         }
     };
-    return resp = await (0, _axiosDefault.default).get(BASE_URL, options);
+    const resp = await (0, _axiosDefault.default).get(BASE_URL, options);
+    return resp;
 }
 function createMarkup(arr) {
     return arr.map(({ largeImageURL , webformatURL , tags , likes , views , comments , downloads ,  })=>`
