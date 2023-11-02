@@ -508,13 +508,68 @@ var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _notiflixNotifyAio = require("notiflix/build/notiflix-notify-aio");
 const elements = {
-    form: document.querySelector(".search-form")
+    form: document.querySelector(".search-form"),
+    gallery: document.querySelector(".gallery"),
+    loadMore: document.querySelector(".load-more")
 };
+let inputText = "";
+let page = 1;
 elements.form.addEventListener("submit", handlerSubmit);
-function handlerSubmit(evt) {
+async function handlerSubmit(evt) {
     evt.preventDefault();
-    const search = evt.currentTarget.elements.searchQuery.value;
-    (0, _notiflixNotifyAio.Notify).failure(search);
+    elements.gallery.innerHTML = "";
+    inputText = evt.target.elements.searchQuery.value.trim();
+    if (inputText === "") return (0, _notiflixNotifyAio.Notify).failure("Please, enter your request");
+    try {
+        const resp = await getArrPictures(inputText, page);
+        elements.gallery.insertAdjacentHTML("beforeend", createMarkup(resp.data.hits));
+    } catch (err) {
+        console.error(err);
+    // Notify.failure(
+    //   "Sorry, there are no images matching your search query. Please try again."
+    // );
+    } finally{
+        evt.target.reset();
+    }
+}
+async function getArrPictures(search, page1) {
+    const BASE_URL = "https://pixabay.com/api/?";
+    const API_KEY = "40431810-f7dd8042cda962dd110bb8ea1";
+    const options = {
+        params: {
+            key: API_KEY,
+            q: search,
+            image_type: "photo",
+            orientation: "horizontal",
+            safesearch: true,
+            per_page: 40,
+            page: page1
+        }
+    };
+    return resp = await (0, _axiosDefault.default).get(BASE_URL, options);
+}
+function createMarkup(arr) {
+    return arr.map(({ userImageURL , tags , likes , views , comments , downloads  })=>`<div class="photo-card">
+        <img src="${userImageURL}" alt="${tags}" loading="lazy" />
+        <div class="info">
+          <p class="info-item">
+            <b>Likes</b> 
+            ${likes}
+          </p>
+          <p class="info-item">
+            <b>Views</b>
+            ${views}
+          </p>
+          <p class="info-item">
+            <b>Comments</b>
+            ${comments}
+          </p>
+          <p class="info-item">
+            <b>Downloads</b>
+            ${downloads}
+          </p>
+        </div>
+      </div>`).join("");
 }
 
 },{"axios":"jo6P5","notiflix/build/notiflix-notify-aio":"eXQLZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
