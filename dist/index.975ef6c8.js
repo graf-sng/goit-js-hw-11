@@ -515,6 +515,7 @@ const elements = {
     gallery: document.querySelector(".gallery"),
     loadMore: document.querySelector(".load-more")
 };
+const gallerySimple = new (0, _simplelightboxDefault.default)(".gallery a");
 let inputText = "";
 let page = 1;
 elements.form.addEventListener("submit", handlerSubmit);
@@ -530,6 +531,7 @@ async function handlerSubmit(evt) {
         if (resp.data.hits.length < 1) return (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
         (0, _notiflixNotifyAio.Notify).info(`Hooray! We found ${resp.data.totalHits} images.`);
         elements.gallery.insertAdjacentHTML("beforeend", createMarkup(resp.data.hits));
+        gallerySimple.refresh();
         elements.loadMore.hidden = false;
     } catch (err) {
         (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
@@ -542,6 +544,7 @@ async function handlerLoadMore() {
     try {
         const resp = await getArrPictures(inputText, page);
         elements.gallery.insertAdjacentHTML("beforeend", createMarkup(resp.data.hits));
+        gallerySimple.refresh();
         if (page >= 12) elements.loadMore.hidden = true;
     } catch (err) {
         (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
@@ -564,11 +567,12 @@ async function getArrPictures(search, page1) {
     return resp = await (0, _axiosDefault.default).get(BASE_URL, options);
 }
 function createMarkup(arr) {
-    return arr.map(({ userImageURL , tags , likes , views , comments , downloads  })=>`<div class="photo-card">
-        <img src="${userImageURL}" alt="${tags}" loading="lazy" />
+    return arr.map(({ largeImageURL , webformatURL , tags , likes , views , comments , downloads ,  })=>`
+      <li class="photo-card">
+        <a href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
         <div class="info">
           <p class="info-item">
-            <b>Likes</b> 
+            <b>Likes</b>
             ${likes}
           </p>
           <p class="info-item">
@@ -584,7 +588,7 @@ function createMarkup(arr) {
             ${downloads}
           </p>
         </div>
-      </div>`).join("");
+      </li>`).join("");
 }
 
 },{"axios":"jo6P5","notiflix/build/notiflix-notify-aio":"eXQLZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","simplelightbox":"9ydBq","simplelightbox/dist/simple-lightbox.min.css":"kaxSc"}],"jo6P5":[function(require,module,exports) {

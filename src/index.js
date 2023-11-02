@@ -9,6 +9,7 @@ const elements = {
   loadMore: document.querySelector(".load-more"),
 };
 
+const gallerySimple = new SimpleLightbox(".gallery a");
 let inputText = "";
 let page = 1;
 
@@ -41,6 +42,7 @@ async function handlerSubmit(evt) {
       "beforeend",
       createMarkup(resp.data.hits)
     );
+    gallerySimple.refresh();
 
     elements.loadMore.hidden = false;
   } catch (err) {
@@ -62,6 +64,7 @@ async function handlerLoadMore() {
       "beforeend",
       createMarkup(resp.data.hits)
     );
+    gallerySimple.refresh();
 
     if (page >= 12) {
       elements.loadMore.hidden = true;
@@ -93,12 +96,20 @@ async function getArrPictures(search, page) {
 function createMarkup(arr) {
   return arr
     .map(
-      ({ userImageURL, tags, likes, views, comments, downloads }) =>
-        `<div class="photo-card">
-        <img src="${userImageURL}" alt="${tags}" loading="lazy" />
+      ({
+        largeImageURL,
+        webformatURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => `
+      <li class="photo-card">
+        <a href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
         <div class="info">
           <p class="info-item">
-            <b>Likes</b> 
+            <b>Likes</b>
             ${likes}
           </p>
           <p class="info-item">
@@ -114,7 +125,7 @@ function createMarkup(arr) {
             ${downloads}
           </p>
         </div>
-      </div>`
+      </li>`
     )
     .join("");
 }
