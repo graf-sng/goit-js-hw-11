@@ -1,34 +1,80 @@
-.loader {
-  width: 100px;
-  height: 100px;
-  border: 6px solid;
-  border-color: #ff3d00 transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: coral;
 }
+.form input,
+.form button {
+  height: 30px;
+  border-radius: 4px;
+  box-shadow: none;
+}
+.form input {
+  width: 200px;
+}
+.search-form {
+  display: block;
+  margin: 0 auto;
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  gap: 20px;
+  list-style-type: none;
+}
+.photo-card {
+  border-radius: 0px 0px 4px 4px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+}
+.photo-card a img {
+  width: 320px;
+}
+.info {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 10px;
+  font-size: 12px;
+}
+.info-item {
+  /* width: 75px; */
+  text-align: center;
+}
+.load-more {
+  display: block;
+  height: 30px;
+  margin: 0 auto;
+
+  align-items: center;
+  background-image: linear-gradient(135deg, #f34079 40%, #fc894d);
+  border: 0;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Codec cold', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  height: 54px;
+  justify-content: center;
+  letter-spacing: 0.4px;
+  line-height: 1;
+  max-width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 3px;
+  text-decoration: none;
+  text-transform: uppercase;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 .is-hidden {
   display: none;
-}
-.breed-select {
-  width: 300px;
-  margin-bottom: 30px;
-}
-.cat-info {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-}
-.about-cat {
-  margin-left: 30px;
 }

@@ -526,13 +526,13 @@ async function handlerSubmit(evt) {
     inputText = evt.target.elements.searchQuery.value.trim();
     if (inputText === "") return (0, _notiflixNotifyAio.Notify).failure("Please, enter your request");
     try {
-        elements.loadMore.hidden = true;
+        elements.loadMore.classList.add("is-hidden");
         const resp = await getArrPictures(inputText, page);
         if (resp.data.hits.length < 1) return (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
         (0, _notiflixNotifyAio.Notify).info(`Hooray! We found ${resp.data.totalHits} images.`);
         elements.gallery.insertAdjacentHTML("beforeend", createMarkup(resp.data.hits));
         gallerySimple.refresh();
-        elements.loadMore.hidden = false;
+        resp.data.hits.length < 40 ? elements.loadMore.classList.add("is-hidden") : elements.loadMore.classList.remove("is-hidden");
     } catch (err) {
         (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
     } finally{
@@ -545,7 +545,7 @@ async function handlerLoadMore() {
         const resp = await getArrPictures(inputText, page);
         elements.gallery.insertAdjacentHTML("beforeend", createMarkup(resp.data.hits));
         gallerySimple.refresh();
-        if (page >= 12) elements.loadMore.hidden = true;
+        if (page >= 12) elements.loadMore.classList.add("is-hidden");
     } catch (err) {
         (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
     }
@@ -572,26 +572,56 @@ function createMarkup(arr) {
         <a href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
         <div class="info">
           <p class="info-item">
-            <b>Likes</b>
+            <b>Likes</b><br>
             ${likes}
           </p>
           <p class="info-item">
-            <b>Views</b>
+            <b>Views</b><br>
             ${views}
           </p>
           <p class="info-item">
-            <b>Comments</b>
+            <b>Comments</b><br>
             ${comments}
           </p>
           <p class="info-item">
-            <b>Downloads</b>
+            <b>Downloads</b><br>
             ${downloads}
           </p>
         </div>
       </li>`).join("");
 }
 
-},{"axios":"jo6P5","notiflix/build/notiflix-notify-aio":"eXQLZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","simplelightbox":"9ydBq","simplelightbox/dist/simple-lightbox.min.css":"kaxSc"}],"jo6P5":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","axios":"jo6P5","notiflix/build/notiflix-notify-aio":"eXQLZ","simplelightbox":"9ydBq","simplelightbox/dist/simple-lightbox.min.css":"kaxSc"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _axiosJsDefault.default));
@@ -1272,37 +1302,7 @@ function bind(fn, thisArg) {
 }
 exports.default = bind;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"cpqD8":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cpqD8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utilsJs = require("./../utils.js");
