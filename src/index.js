@@ -1,4 +1,6 @@
+import debounce from 'lodash.debounce';
 import { handlerSubmit, handlerLoadMore } from './foo';
+
 const elements = {
   form: document.querySelector('.search-form'),
   gallery: document.querySelector('.gallery'),
@@ -6,4 +8,4 @@ const elements = {
 };
 
 elements.form.addEventListener('submit', handlerSubmit);
-elements.loadMore.addEventListener('click', handlerLoadMore);
+elements.loadMore.addEventListener('click', debounce(handlerLoadMore, 300));
