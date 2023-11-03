@@ -503,7 +503,22 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"8lqZg":[function(require,module,exports) {
+var _foo = require("./foo");
+const elements = {
+    form: document.querySelector(".search-form"),
+    gallery: document.querySelector(".gallery"),
+    loadMore: document.querySelector(".load-more")
+};
+elements.form.addEventListener("submit", (0, _foo.handlerSubmit));
+elements.loadMore.addEventListener("click", (0, _foo.handlerLoadMore));
+
+},{"./foo":"20UgM"}],"20UgM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "handlerSubmit", ()=>handlerSubmit);
+parcelHelpers.export(exports, "handlerLoadMore", ()=>handlerLoadMore);
+parcelHelpers.export(exports, "getArrPictures", ()=>getArrPictures);
+parcelHelpers.export(exports, "createMarkup", ()=>createMarkup);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _notiflixNotifyAio = require("notiflix/build/notiflix-notify-aio");
@@ -518,11 +533,10 @@ const elements = {
 const gallerySimple = new (0, _simplelightboxDefault.default)(".gallery a");
 let inputText = "";
 let page = 1;
-elements.form.addEventListener("submit", handlerSubmit);
-elements.loadMore.addEventListener("click", handlerLoadMore);
 async function handlerSubmit(evt) {
     evt.preventDefault();
     elements.gallery.innerHTML = "";
+    page = 1;
     inputText = evt.target.elements.searchQuery.value.trim();
     if (inputText === "") return (0, _notiflixNotifyAio.Notify).failure("Please, enter your request");
     try {
@@ -545,7 +559,7 @@ async function handlerLoadMore() {
         const resp = await getArrPictures(inputText, page);
         elements.gallery.insertAdjacentHTML("beforeend", createMarkup(resp.data.hits));
         gallerySimple.refresh();
-        if (page >= 12) elements.loadMore.classList.add("is-hidden");
+        resp.data.hits.length < 40 || page >= 12 ? elements.loadMore.classList.add("is-hidden") : elements.loadMore.classList.remove("is-hidden");
     } catch (err) {
         (0, _notiflixNotifyAio.Notify).failure("Sorry, there are no images matching your search query. Please try again.");
     }
@@ -592,37 +606,7 @@ function createMarkup(arr) {
       </li>`).join("");
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","axios":"jo6P5","notiflix/build/notiflix-notify-aio":"eXQLZ","simplelightbox":"9ydBq","simplelightbox/dist/simple-lightbox.min.css":"kaxSc"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"jo6P5":[function(require,module,exports) {
+},{"axios":"jo6P5","notiflix/build/notiflix-notify-aio":"eXQLZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","simplelightbox":"9ydBq","simplelightbox/dist/simple-lightbox.min.css":"kaxSc"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _axiosJsDefault.default));
@@ -1303,7 +1287,37 @@ function bind(fn, thisArg) {
 }
 exports.default = bind;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cpqD8":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"cpqD8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utilsJs = require("./../utils.js");
